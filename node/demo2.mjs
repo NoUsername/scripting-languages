@@ -1,12 +1,30 @@
-// server.mjs
-import express from 'express'
-const app = express()
-const port = 3333
+import * as https from 'node:https';
+import * as fs from 'node:fs';
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+function get(url) {
+  return new Promise((resolve) => {
+    https
+    .get(url, res => {
+      let rawData = '';
+      res.on('data', (chunk) => { rawData += chunk; });
+      res.on('end', () => {
+        try {
+          const parsedData = JSON.parse(rawData);
+          console.log(parsedData);
+          resolve(parsedData);
+        } catch (e) {
+          console.error(e.message);
+        }
+      });
+    });
+  });
+}
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+async function main() {
+  const data = await get('https://jsonplaceholder.typicode.com/posts')
+  data.slice(0, 5).forEach((element, idx) => {
+    fs.writeFileSync(`result_${idx}.txt`, `Title: ${element.title}`)
+  });
+}
+
+main()

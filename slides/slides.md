@@ -5,7 +5,7 @@ theme: uncover
 
 # Do you even script?
 
-A comparison of modern scripting
+A comparison of modern scripting solutions
 
 ---
 
@@ -18,7 +18,7 @@ A comparison of modern scripting
 * Typing support
 * Multiplatform
 * Easy to install
-* Reasonably fast
+* Maintainable
 
 ---
 

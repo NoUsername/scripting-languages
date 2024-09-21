@@ -20,11 +20,8 @@ function get(url) {
   });
 }
 
-async function main() {
-  const data = await get('https://jsonplaceholder.typicode.com/posts')
-  data.slice(0, 5).forEach((element, idx) => {
-    fs.writeFileSync(`result_${idx}.txt`, `Title: ${element.title}`)
-  });
-}
-
-main()
+// NOTE: toplevel await may not work (depending on node version)
+const data = await get('https://jsonplaceholder.typicode.com/posts')
+data.slice(0, 5).forEach((element, idx) => {
+  fs.writeFileSync(`result_${idx}.txt`, `Title: ${element.title}`)
+});
